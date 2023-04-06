@@ -90,6 +90,8 @@ jobs:
           --code S3Bucket=my-bucket-teo,S3Key=${{ github.sha }}.zip \
           --handler lambda_function.lambda_handler \
           --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/my-lambda-role
+      - name: Wait 30 seconds  
+        run: sleep 30  
       - name: Invoke Test Function
         run: |
          aws lambda invoke \
