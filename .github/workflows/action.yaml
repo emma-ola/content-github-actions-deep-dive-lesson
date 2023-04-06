@@ -87,7 +87,12 @@ jobs:
           --code S3Bucket=my-bucket-teo,S3Key=${{ github.sha }}.zip \
           --handler lambda_function.lambda_handler \
           --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/my-lambda-role
-
+      - name: Wait 30 seconds  
+        run: sleep 30  
+      - name: Destroy test function  
+        if: ${{ always() }}  
+        run: aws lambda delete-function --function-name test-function
+        
   deploy: 
     runs-on: ubuntu-latest
     needs: test
